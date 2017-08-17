@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Swift-Carr Family Reunion</title>
+	<script
+  src="http://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+	<div class="register">
+		 <h2>Register<span style="float:right;"><span id="childTotal"> </span><span id="adultTotal"></span><span id="total"> </span></span></h2>
+			  <form class="form-horizontal">
+			    <div class="form-group">
+			      <label class="control-label col-sm-3" for="first">Name:</label>
+			      <div class="col-sm-3">
+			        <input type="text" class="form-control" id="first" placeholder="First Name">
+			      </div>
+			      <div class="col-sm-3">
+			        <input type="text" class="form-control" id="last" placeholder="Last name">
+			      </div>
+			    </div>
+					<div class="form-group">
+							<label class="control-label col-sm-3" for="address">Address:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="address" placeholder="Street Address">
+							</div>
+						</div>
+					<div class="form-group">
+					<label class="control-label col-sm-3" for="city/state/zip">City/State/Zip:</label>
+						<div class="col-sm-2">
+						<input type="text" class="form-control" id="city" placeholder="City">
+						</div>
+						<div class="col-sm-2">
+						<input type="text" class="form-control" id="state" placeholder="State">
+						</div>
+						<div class="col-sm-2">
+						<input type="text" class="form-control" id="zip" placeholder="zip">
+						</div>
+					</div>
+					<div class="form-group">
+							<label class="control-label col-sm-3" for="phone">Phone:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" id="phone" placeholder="Phone Number">
+							</div>
+							
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-3" for="tShirt">T-Shirt</label>
+						<div>
+							<select>
+								<option value='0'>None</option>
+								<option value='25'>XS</option>
+								<option value='25'>S</option>
+								<option value='25'>M</option>
+								<option value='25'>L</option>
+								<option value='25'>XL</option>
+								<option value='25'>XXL</option>
+								<option value='25'>XXL</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			  <div class="form-group" style="padding-bottom:30%;">
+				<div class="col-sm-offset-6 col-sm-10">
+
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+
+						<!-- Identify your business so that you can collect the payments. -->
+						<input type="hidden" name="business" value="lewisl7@yahoo.com">
+
+						<!-- Specify a Buy Now button. -->
+						<input type="hidden" name="cmd" value="_xclick">
+
+						<!-- Specify details about the item that buyers will purchase. -->
+						<input type="hidden" name="item_name" value="Swift-Carr Family Reunion">
+						<input type="hidden" id="amount" name="amount" value="95">
+						<input type="hidden" name="currency_code" value="USD">
+						<!-- Display the payment button. -->
+						<button id="adult" type="button" class="btn btn-default">Add Adult</button>
+						<button id="child" type="button" class="btn btn-default">Add Child (Under 17)</button>
+						<!-- <button class="btn-outline btn" type="submit" target="_blank"><i class="fa fa-paypal"></i> Register </button> -->
+						<button id="paypal" type="button" class="btn btn-default">register</button>
+						<img alt="" border="0" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
+					</form>
+				</form>
+			</div>
+		 </div>
+	</div>
+<script>
+	/*jshint esversion:6*/
+	let adultNum = 1;
+	let childNum = 0;
+	update();
+
+	function update (){
+		$('#childTotal').html(childNum+" children | ");
+		$('#adultTotal').html(adultNum+" adults | ");
+		let totalPeople = (childNum*50)+(adultNum*95);
+		$('#total').html(" =$"+totalPeople);
+	}
+
+	$('#child').click(function(){
+		childNum += 1;
+		$('#amount').val(childNum*50);
+		update();
+		$('.form-horizontal').append(`
+			<hr>
+					<div class="form-group">
+			      <label class="control-label col-sm-3" for="first">Name:</label>
+			      <div class="col-sm-2">
+			        <input type="text" class="form-control" id="first" placeholder="First Name">
+			      </div>
+			      <div class="col-sm-2">
+			        <input type="text" class="form-control" id="last" placeholder="Last name">
+			      </div>
+						<div class="col-sm-2">
+			        	<select>
+									<option value='0'>T-Shirt Size</option>
+									<option value='25'>XS</option>
+									<option value='25'>S</option>
+									<option value='25'>M</option>
+									<option value='25'>L</option>
+									<option value='25'>XL</option>
+									<option value='25'>XXL</option>
+									<option value='25'>XXL</option>
+								</select>
+			      </div>
+			    </div>`);
+	});
+
+	$('#adult').click(function(){
+		adultNum += 1;
+		$('#amount').val(adultNum*95);
+				$('.form-horizontal').append(
+					`<hr>
+					<div class="form-group">
+			      <label class="control-label col-sm-3" for="first">Name:</label>
+			      <div class="col-sm-2">
+			        <input type="text" class="form-control" id="first" placeholder="First Name">
+			      </div>
+			      <div class="col-sm-2">
+			        <input type="text" class="form-control" id="last" placeholder="Last name">
+			      </div>
+						<div class="col-sm-2">
+			        	<select>
+									<option value='0'>T-Shirt Size</option>
+									<option value='25'>XS</option>
+									<option value='25'>S</option>
+									<option value='25'>M</option>
+									<option value='25'>L</option>
+									<option value='25'>XL</option>
+									<option value='25'>XXL</option>
+									<option value='25'>XXL</option>
+								</select>
+			      </div>
+			    </div>`
+				);
+		update();
+	});
+
+
+
+
+	$('#paypal').click(function(e){
+		e.preventDefault();
+		console.log($('#amount').val());
+	});
+
+
+</script>
+
+</body>
+</html>
