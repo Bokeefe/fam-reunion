@@ -8,7 +8,6 @@
   integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
   crossorigin="anonymous"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="style.css">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
@@ -17,8 +16,8 @@
 <body>
 
 	<div class="register">
-		 <h2>Register<span style="float:right;"><span id="childTotal"> </span><span id="adultTotal"></span> $=<span id="total"> </span></span></h2>
 			  <form class="form-horizontal">
+				<h2>Register<span style="float:right;"><span id="childTotal"> </span><span id="adultTotal"></span> $=<span id="total"> </span></span></h2>
 			    <div class="form-group">
 			      <label class="control-label col-sm-3" for="first">Name:</label>
 			      <div class="col-sm-3">
@@ -59,13 +58,16 @@
 							<div class="col-sm-3">
 								<select class="form-control" onclick="updateShirt()">
 									<option value='0'>T-Shirt Size</option>
-									<option value='12'>XS</option>
+									<option value='10'>YS</option>
+									<option value='10'>YM</option>
+									<option value='10'>YL</option>
 									<option value='12'>S</option>
 									<option value='12'>M</option>
-									<option value='14'>L</option>
-									<option value='14'>XL</option>
+									<option value='12'>L</option>
+									<option value='12'>XL</option>
 									<option value='14'>XXL</option>
 									<option value='14'>XXL</option>
+									<option value='14'>XWXL</option>
 								</select>
 							</div>
 							<div class="col-sm-1">
@@ -80,7 +82,7 @@
 			  <div class="form-group" style="padding-bottom:30%;">
 				<div class="col-sm-offset-6 col-sm-10">
 
-					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+					<form id="ppform" action="https://www.paypal.com/cgi-bin/webscr" method="post">
 
 						<!-- Identify your business so that you can collect the payments. -->
 						<input type="hidden" name="business" value="lewisl7@yahoo.com">
@@ -108,7 +110,6 @@
 	let adultNum = 1;
     let childNum = 0;
 
-
 	let countShirts = 0;
 	let totalAmount=95;
 
@@ -121,27 +122,22 @@
     function updateBus (val){
 	    if(val.checked){
 	        totalAmount+=JSON.parse(val.value);
-            $('#total').html(totalAmount+countShirts);
+            updatePeople();
 		} else {
 	        totalAmount-=JSON.parse(val.value);
-            $('#total').html(totalAmount+countShirts);
+           	updatePeople();
         }
     }
 	function updateShirt(){
         let selectArray = $('select');
+        countShirts= 0;
 		for(var i =0; i < selectArray.length;++i){
-			countShirts= 0;
 			countShirts += JSON.parse(selectArray[i].value);
 		}
 		console.log(totalAmount+countShirts);
-		$('#total').html(totalAmount+countShirts);
-
-
+		updatePeople();
 
 	}
-
-
-
 
 	$('#child').click(function(){
 		childNum += 1;
@@ -160,13 +156,16 @@
 					<div class="col-sm-2">
 						<select class="form-control" onclick="updateShirt()">
 							<option value='0'>T-Shirt Size</option>
-							<option value='12'>XS</option>
+							<option value='10'>YS</option>
+							<option value='10'>YM</option>
+							<option value='10'>YL</option>
 							<option value='12'>S</option>
 							<option value='12'>M</option>
-							<option value='14'>L</option>
-							<option value='14'>XL</option>
+							<option value='12'>L</option>
+							<option value='12'>XL</option>
 							<option value='14'>XXL</option>
 							<option value='14'>XXL</option>
+							<option value='14'>XWXL</option>
 						</select>
 					  </div>
 					<div class="col-sm-1">
@@ -195,13 +194,16 @@
 					<div class="col-sm-2">
 						<select class="form-control" onclick="updateShirt()">
 							<option value='0'>T-Shirt Size</option>
-							<option value='12'>XS</option>
+							<option value='10'>YS</option>
+							<option value='10'>YM</option>
+							<option value='10'>YL</option>
 							<option value='12'>S</option>
 							<option value='12'>M</option>
-							<option value='14'>L</option>
-							<option value='14'>XL</option>
+							<option value='12'>L</option>
+							<option value='12'>XL</option>
 							<option value='14'>XXL</option>
 							<option value='14'>XXL</option>
+							<option value='14'>XWXL</option>
 						</select>
 					</div>
 					<div class="col-sm-1">
@@ -217,9 +219,12 @@
 
 	$('#paypal').click(function(e){
 		e.preventDefault();
-        console.log(totalAmount+countShirts);
 
-		$('#amount').val();
+
+		$('#amount').val(totalAmount+countShirts);
+        console.log(typeof $('#amount').val());
+        //$('#ppform').submit();
+
 	});
 
 
